@@ -10,8 +10,6 @@ class Huffman:
 		length = len(self.forest)
 		for t in range(0,length-1):
 			left,right = self.get_min_value_node()
-			#newtree = Tree(self.forest[left],self.forest[right],self.forest[left].name+self.forest[right].name,
-			#	self.forest[left].value+self.forest[right].value)
 			newtree = Tree(left,right,left.name+right.name,left.value+right.value)
 			self.forest.remove(left)
 			self.forest.remove(right)
@@ -30,11 +28,6 @@ class Huffman:
 			elif t.value < secnode.value & t.value != minnode.value:
 				secnode = t
 		return minnode,secnode
-
-	def get_node_index(self,node):
-		for t in range(len(self.forest)):
-			if self.forest[t].name == node.name:
-				return t
 
 
 listnodes = {'f':5,'e':9,'c':12,'b':13,'d':16,'a':45}
