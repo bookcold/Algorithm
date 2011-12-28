@@ -1,4 +1,5 @@
 from sys import *
+from UnionFind import UnionFind
 
 class Graph:
 	def __init__(self,G):
@@ -26,13 +27,33 @@ class Graph:
 			for node in queue.keys():
 				if queue[u] > queue[node]:
 					u = node
-			print queue[u]
+			#print queue[u]
 			del queue[u]
 			for v in self.Adj(u):
 				if v in queue and self.Weight(u,v) < self.keys[v]:
 					self.parents[v] = u
 					self.keys[v] = self.Weight(u,v)
 		return self.parents
+
+	def kruskal(self):
+		Weight = {}
+		Trees = []
+		UnionSet = UnionFind()
+		UnionSet.makeset(self.V())
+		for v in self.V():
+			edge = self.Adj(v)
+			for u in edge:
+				uv = u + v
+				Weight[uv] = self.Weight(u,v)
+
+		#edges = [(self.Weight(u,v),u,v) for v in self.V() for u in self.Adj(v)].sort()
+		edges = [(self.Weight(u,v),v,u) for v in self.V() for u in self.Adj(v)]
+		edges.sort()
+		for w,u,v in edges:
+			if UnionSet.find(u) != UnionSet.find(v):
+				Trees.append(u+v)
+				UnionSet.union(u,v)
+		return Trees	
 
 L = {'A': {'B':4, 'H':8}, 'B': {'A':4, 'C':8, 'H':11},
 		'C': {'B':8, 'D':7, 'I':2, 'F':4}, 'D': {'C':7,'F':14, 'E':9},
@@ -41,7 +62,7 @@ L = {'A': {'B':4, 'H':8}, 'B': {'A':4, 'C':8, 'H':11},
 		'I':{'C':2,'H':7,'G':6}
 	}
 G = Graph(L)
+print G.kruskal()
 print G.prim('A')
-
 
 

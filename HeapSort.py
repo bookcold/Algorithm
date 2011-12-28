@@ -1,7 +1,7 @@
 class HeapSort:
     def __init__(self,array):
-        self.array = array
-        self.length = len(array)-1
+        self.array    = array
+        self.length   = len(array)-1
         self.heapsize = self.length
 
     def __parent__(self,i):
@@ -17,9 +17,9 @@ class HeapSort:
         print self.array
 
     def __swap__(self,i,j):
-        tmp = self.array[i]
-        self.array[i]=self.array[j]
-        self.array[j]=tmp
+        tmp           = self.array[i]
+        self.array[i] =self.array[j]
+        self.array[j] =tmp
 
     def BuildMaxHeap(self):
         for i in range(self.length//2,-1,-1):
@@ -27,8 +27,8 @@ class HeapSort:
 
     def MaxHeapify(self,i):
         largest = 0
-        left = self.__left__(i)
-        right = self.__right__(i)
+        left    = self.__left__(i)
+        right   = self.__right__(i)
         if left <= self.heapsize and self.array[left] > self.array[i]:
             largest = left
         else:
