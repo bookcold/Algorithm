@@ -5,14 +5,23 @@ class Tree:
 		self.name = name
 		self.value = value
 	
-	def get_left(self):
-		return self.left
+	@classmethod
+	def bfs(self,root):
+		queue = []
+		queue.append(root)
+		while len(queue) != 0:
+			node = queue.pop(0)
+			print node.name + ":" + str(node.value)
+			if node.left != None:
+				queue.append(node.left)
+			if node.right != None:
+				queue.append(node.right)
 
-	def get_right(self):
-		return self.right
+	@classmethod
+	def dfs(self,root):
+		if root != None:
+			print root.name + ":" +str(root.value)
+			self.dfs(root.left)
+			self.dfs(root.right)
 
-	def get_name(self):
-		return self.name
-
-	def get_value(self):
-		return self.value
+		
