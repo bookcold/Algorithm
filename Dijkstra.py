@@ -1,18 +1,8 @@
-from PriorityDictionary import PriorityDictionary
+from Graph import Graph
 
 class Dijkstra:
 	def __init__(self,G):
-		self.G = G
-		self.keys = {}
-	
-	def V(self):
-		return self.G.keys()
-
-	def Adj(self,V):
-		return self.G[V].keys()
-
-	def Weight(self,u,v):
-		return self.G[u][v]
+		self.G = Graph(G)
 
 	def Dijkstra(self,start):		
 		dist = {}   
@@ -21,11 +11,12 @@ class Dijkstra:
 		# Initializations
 		# dist: Unkown distance function from souce to v
 		# previous: Previous node in optimal path from source
-		for v in self.V():
+		for v in self.G.V():
 			dist[v] = float('inf')
 			previous[v] = float('inf')
 			Q[v] = float('inf')
 		dist[start] = 0
+		Q[start] = 0
 
 		while Q: # the main loop
 			u = min(Q, key = lambda x:Q.get(x))
@@ -33,8 +24,8 @@ class Dijkstra:
 				break  # all remaining vertices are inaccessible from souce
 			Q.pop(u)
 			# where v has not yet been removed from Q
-			for adj in self.Adj(u):
-				alt = dist[u] + self.Weight(u,adj)
+			for adj in self.G.Adj(u):
+				alt = dist[u] + self.G.Weight(u,adj)
 				#replace with optimal distance and node
 				if alt < dist[adj]:
 					dist[adj] = alt
@@ -45,6 +36,7 @@ class Dijkstra:
 	def shortest_path(self,start,end):
 		path = []
 		dist,previous = self.Dijkstra(start)
+		print dist,previous
 		#get the path from start to end
 		while 1:
 			if end == float('inf'):
@@ -62,5 +54,4 @@ G = {'A': {'B':4, 'H':8}, 'B': {'A':4, 'C':8, 'H':11},
 		'I':{'C':2,'H':7,'G':6}
 	}
 dijk = Dijkstra(G)
-print dijk.shortest_path('A','E')
-#shortestPath(G,'A','H')
+print dijk.shortest_path('E','A')
